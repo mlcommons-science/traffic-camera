@@ -1,0 +1,17 @@
+system:
+  host: rivanna
+
+experiment:
+  profile: ["LeatherDarknet"]
+  template: ["yolov4-tiny", "yolov7-tiny"]
+  val_frac: [0.20]
+  num_gpus: [1]
+  color_preset: [null, "preserve"]   # only matters if your profile supports it
+  ultra_model: ["yolo11n.pt"]        # ignored for darknet
+
+  # Pick ONE of these for rivanna sbatch generation:
+  card_name: "a100"      # example, must match your rivanna config keys
+  # directive: "a100-1"  # alternative
+
+ee:
+  identifier: "{experiment.profile}_{experiment.template}_v{experiment.val_frac}"
