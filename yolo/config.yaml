@@ -1,17 +1,16 @@
 system:
   host: rivanna
+  dataset_root: "/scratch/dje5dj/car_data"
 
 experiment:
-  directive: "a100"          # rivanna key for sbatch directives
+  directive: "a100"
   gpu_count: "1"
-
-  profile: ["LeatherDarknet"]
-  template: ["yolov4-tiny", "yolov7-tiny"]
-  val_frac: [0.20]
+  profile: ["FisheyeTrafficDarknetLocal"]
+  template: ["yolov4", "yolov7"]
+  val_frac: [0.10]
   num_gpus: [1]
-  color_preset: [null, "preserve"]
-  ultra_model: ["yolo11n.pt"]   # ignored for darknet but fine
+  ultra_model: ["yolo11n.pt"]
 
 ee:
-  identifier: "{experiment.profile}_{experiment.template}_val{experiment.val_frac}_color{experiment.color_preset}"
+  identifier: "{experiment.profile}_{experiment.template}_val{experiment.val_frac}"
 

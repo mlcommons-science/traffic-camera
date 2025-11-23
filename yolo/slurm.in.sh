@@ -1,7 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=cc_{ee.identifier}
 #SBATCH --output=darknet_train.out
-#SBATCH --error=darknet_train.err
+#SBATCH --error=darknet_train.out
+#SBATCH --cpus-per-task=8
+#SBATCH --time=1-23:00:00
 {slurm.sbatch}
 
 set -euo pipefail
@@ -63,6 +65,13 @@ if [[ -n "$COLOR_PRESET" && "$COLOR_PRESET" != "None" && "$COLOR_PRESET" != "nul
   COLOR_ARGS="--color-preset $COLOR_PRESET"
 fi
 
+# ---- dataset root logic ----
+DATASET_ROOT="{system.dataset_root}"
+DATASET_ARGS=""
+if [[ -n "$DATASET_ROOT" && "$DATASET_ROOT" != "None" && "$DATASET_ROOT" != "null" ]]; then
+  DATASET_ARGS="--dataset-root $DATASET_ROOT"
+fi
+
 
 # Run training inside container with writable binds
 apptainer exec --nv --fakeroot \
@@ -82,7 +91,7 @@ apptainer exec --nv --fakeroot \
       --template {experiment.template} \
       --val-frac {experiment.val_frac} \
       --num-gpus {experiment.num_gpus} \
-      $COLOR_ARGS \
+      $DATASET_ARGS \
       --ultra-model {experiment.ultra_model} \
       --no-sweep
   "
