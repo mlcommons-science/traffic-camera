@@ -6,10 +6,12 @@ experiment:
   directive: "a100"
   gpu_count: "1"
   profile: ["FisheyeTrafficDarknetLocal"]
+  #profile: ["FisheyeTrafficUltralyticsLocal"]
   template: ["yolov4", "yolov7"]
   val_frac: [0.10]
   num_gpus: [1]
-  ultra_model: ["yolo11n.pt"]
+  ultra_model: ["yolo11s.pt"]
+  repeat: [1,2,3] 
 
 ee:
   identifier: "{experiment.profile}_{experiment.template}_val{experiment.val_frac}"
