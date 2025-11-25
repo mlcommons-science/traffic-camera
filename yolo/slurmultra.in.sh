@@ -72,7 +72,7 @@ if [[ -n "$DATASET_ROOT" && "$DATASET_ROOT" != "None" && "$DATASET_ROOT" != "nul
 fi
 
 # cap dataloader workers to allocated CPUs (or lower)
-export ULTRA_WORKERS=2
+export ULTRA_WORKERS=4
 
 # Run training inside container with writable binds
 apptainer exec --nv --fakeroot \
