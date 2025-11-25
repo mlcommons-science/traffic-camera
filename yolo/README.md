@@ -20,3 +20,24 @@ cms ee generate \
 cms ee generate submit --name=chocolatechip_runs --job_type=slurm > submit.sh
 bash submit.sh
 ```
+
+
+# ultralytics
+
+```bash
+apptainer build --force my_ultralytics_container.sif apptainer.ultra.def
+
+source ~/ENV3/bin/activate
+
+cms ee generate \
+  --source=slurmultra.in.sh \
+  --config=config.yaml \
+  --name=chocolatechip_runs \
+  --output_dir=project \
+  --mode=h
+
+cms ee generate submit --name=chocolatechip_runs --job_type=slurm > submit.sh
+bash submit.sh
+```
+
+

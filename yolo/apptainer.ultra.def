@@ -1,0 +1,55 @@
+Bootstrap: docker
+From: ultralytics/ultralytics:latest
+
+%environment
+    export DEBIAN_FRONTEND=noninteractive
+    # ultralytics image already sets CUDA/Python paths, but keep these safe:
+    export PATH="/usr/local/cuda/bin:/usr/local/bin:${PATH}"
+    export LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
+    # where chocolatechip will cache/download datasets by default
+    export DATA_ROOT=/workspace/.cache/datasets
+    # keep caches off $HOME in batch contexts
+    export XDG_CACHE_HOME=/workspace/.cache
+    export XDG_CONFIG_HOME=/workspace/.config
+
+%post
+    set -eux
+
+    # tiny set of system deps you rely on (ultralytics image is already rich)
+    apt-get update && apt-get install -y --no-install-recommends \
+        git python3-pip fio ca-certificates \
+        && rm -rf /var/lib/apt/lists/*
+
+    # Python deps (install into the existing ultralytics env to avoid torch duplication)
+    pip install --no-cache-dir --upgrade pip
+    pip install --no-cache-dir \
+        pycocotools \
+        imagesize \
+        cloudmesh-common \
+        git+https://github.com/cloudmesh/cloudmesh-gpu.git
+
+    # Install chocolatechip from GitHub (ultra backend will use ultralytics already in base)
+    pip install --no-cache-dir --ignore-requires-python \
+        git+https://github.com/jpfleischer/chocolatechip.git
+
+    # writable defaults (binds will overlay these in batch)
+    mkdir -p /outputs /workspace /workspace/.cache/datasets /workspace/.cache/splits /workspace/.config
+    chmod 777 /outputs /workspace /workspace/.cache /workspace/.config || true
+
+%runscript
+#!/bin/bash
+set -euo pipefail
+
+echo "Running on $(hostname)"
+echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-}"
+echo "Args: $*"
+
+# If the user passed a command, run it.
+if [ "$#" -gt 0 ]; then
+    exec "$@"
+fi
+
+# Otherwise run a sensible default:
+exec python -u -m chocolatechip.model_training.train \
+    --profile LegoGearsUltra
+

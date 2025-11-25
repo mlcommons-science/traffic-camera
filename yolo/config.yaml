@@ -3,11 +3,11 @@ system:
   dataset_root: "/scratch/dje5dj/car_data"
 
 experiment:
-  directive: "a100"
+  directive: "a100-80gb"
   gpu_count: "1"
-  profile: ["FisheyeTrafficDarknetLocal"]
-  #profile: ["FisheyeTrafficUltralyticsLocal"]
-  template: ["yolov4", "yolov7"]
+  #profile: ["FisheyeTrafficDarknetLocal"]
+  profile: ["FisheyeTrafficUltralyticsLocal"]
+  #template: ["yolov4", "yolov7"]
   val_frac: [0.10]
   num_gpus: [1]
   ultra_model: ["yolo11s.pt"]
