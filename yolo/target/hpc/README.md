@@ -8,6 +8,7 @@ module load apptainer
 apptainer build --force my_darknet_container.sif apptainer.def
 
 source ~/ENV3/bin/activate
+pip install git+https://github.com/cloudmesh/cloudmesh-ee.git
 
 cms ee generate \
   --source=slurm.in.sh \
