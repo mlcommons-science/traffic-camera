@@ -8,10 +8,12 @@ experiment:
   #profile: ["FisheyeTrafficDarknetLocal"]
   profile: ["FisheyeTrafficUltralyticsLocal"]
   #template: ["yolov4", "yolov7"]
+  #template: ["yolov4"]
   val_frac: [0.10]
   num_gpus: [1]
-  ultra_model: ["yolo11s.pt"]
-  repeat: [1,2,3] 
+  ultra_model: ["yolo11m.pt"]
+  #repeat: [1,2,3] 
+  repeat: [1]
 
 ee:
   identifier: "{experiment.profile}_{experiment.template}_val{experiment.val_frac}"

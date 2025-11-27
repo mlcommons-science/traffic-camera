@@ -3,7 +3,8 @@
 #SBATCH --output=ultra_train.out
 #SBATCH --error=ultra_train.out
 #SBATCH --cpus-per-task=8
-#SBATCH --time=1-23:00:00
+#SBATCH --mem=64gb
+#SBATCH --time=1-00:00:00
 {slurm.sbatch}
 
 set -euo pipefail
