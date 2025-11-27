@@ -42,7 +42,8 @@ MPLDIR="$EXP_DIR/mplconfig"
 CACHEDIR="$WORKSPACE/.cache"
 CONFIGDIR="$WORKSPACE/.config"
 
-TMPDIR_HOST="/scratch/$USER/tmp_${SLURM_JOB_ID}"
+#TMPDIR_HOST="/scratch/$USER/tmp_${SLURM_JOB_ID}"
+TMPDIR_HOST={system.tmpdir_host}
 mkdir -p "$TMPDIR_HOST"
 
 mkdir -p "$WORKSPACE" "$OUTPUTS" "$HOME_DIR" "$MPLDIR" "$CACHEDIR" "$CONFIGDIR" "$TMPDIR_HOST"

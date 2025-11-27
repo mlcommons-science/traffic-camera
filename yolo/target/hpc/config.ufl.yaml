@@ -1,0 +1,22 @@
+system:
+  host: hipergator
+  dataset_root: "/blue/ranka/j.fleischer/annotation_data"
+  #tmpdir_host: "/scratch/$USER/tmp_${SLURM_JOB_ID}"
+  tmpdir_host: "/blue/ranka/$USER/tmp_${SLURM_JOB_ID}"
+
+experiment:
+  directive: "b200"
+  gpu_count: "1"
+  #profile: ["FisheyeTrafficDarknetLocal"]
+  profile: ["FisheyeTrafficUltralyticsLocal"]
+  #template: ["yolov4", "yolov7"]
+  #template: ["yolov4"]
+  val_frac: [0.10]
+  num_gpus: [1]
+  ultra_model: ["yolo11m.pt"]
+  #repeat: [1,2,3] 
+  repeat: [1,2,3,4,5]
+
+ee:
+  identifier: "{experiment.profile}_{experiment.template}_val{experiment.val_frac}"
+

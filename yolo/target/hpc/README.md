@@ -28,6 +28,7 @@ bash submit.sh
 apptainer build --force my_ultralytics_container.sif apptainer.ultra.def
 
 source ~/ENV3/bin/activate
+pip install git+https://github.com/cloudmesh/cloudmesh-ee.git
 
 cms ee generate \
   --source=slurmultra.in.sh \
