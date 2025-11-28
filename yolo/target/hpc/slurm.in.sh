@@ -82,6 +82,7 @@ apptainer exec --nv --fakeroot \
   -B "$MPLDIR":/mplconfig:rw \
   --env DARKNET_PARENT=/host_workspace \
   --env MPLCONFIGDIR=/mplconfig \
+  --env EE_REPEAT="{experiment.repeat}" \
   "$SIF" \
   bash -lc "
     set -euo pipefail

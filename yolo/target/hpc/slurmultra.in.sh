@@ -90,6 +90,7 @@ apptainer exec --nv --fakeroot \
   --env DATA_ROOT=/workspace/.cache/datasets \
   --env ULTRA_WORKERS="$ULTRA_WORKERS" \
   --env TMPDIR=/tmp \
+  --env EE_REPEAT="{experiment.repeat}" \
   "$SIF" \
   bash -lc "
     set -euo pipefail
