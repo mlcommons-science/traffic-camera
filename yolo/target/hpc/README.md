@@ -8,7 +8,11 @@ module load apptainer
 apptainer build --force my_darknet_container.sif apptainer.def
 
 source ~/ENV3/bin/activate
-pip install git+https://github.com/cloudmesh/cloudmesh-ee.git
+
+pip uninstall cloudmesh-ee
+pip uninstall cloudmesh-rivanna
+pip install git+https://github.com/cloudmesh/cloudmesh-rivanna.git -U
+pip install git+https://github.com/cloudmesh/cloudmesh-ee.git -U
 
 cms ee generate \
   --source=slurm.in.sh \
@@ -29,7 +33,11 @@ bash submit.sh
 apptainer build --force my_ultralytics_container.sif apptainer.ultra.def
 
 source ~/ENV3/bin/activate
-pip install git+https://github.com/cloudmesh/cloudmesh-ee.git
+
+pip uninstall cloudmesh-ee
+pip uninstall cloudmesh-rivanna
+pip install git+https://github.com/cloudmesh/cloudmesh-rivanna.git -U
+pip install git+https://github.com/cloudmesh/cloudmesh-ee.git -U
 
 cms ee generate \
   --source=slurmultra.in.sh \
