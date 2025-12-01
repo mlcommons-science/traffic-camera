@@ -50,7 +50,7 @@ cms ee generate submit --name=chocolatechip_runs --job_type=slurm > submit.sh
 bash submit.sh
 ```
 
-#hipergator
+# hipergator
 
 ```bash
 apptainer build --force my_ultralytics_container.sif apptainer.ultra.def
