@@ -50,4 +50,25 @@ cms ee generate submit --name=chocolatechip_runs --job_type=slurm > submit.sh
 bash submit.sh
 ```
 
+#hipergator
 
+```bash
+apptainer build --force my_ultralytics_container.sif apptainer.ultra.def
+
+source ~/ENV3/bin/activate
+
+pip uninstall cloudmesh-ee
+pip uninstall cloudmesh-rivanna
+pip install git+https://github.com/cloudmesh/cloudmesh-rivanna.git -U
+pip install git+https://github.com/cloudmesh/cloudmesh-ee.git -U
+
+cms ee generate \
+  --source=slurm.in.sh \
+  --config=config.ufl.yaml \
+  --name=chocolatechip_runs \
+  --output_dir=project \
+  --mode=h
+
+cms ee generate submit --name=chocolatechip_runs --job_type=slurm > submit.sh
+bash submit.sh
+```
