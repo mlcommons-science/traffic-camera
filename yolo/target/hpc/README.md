@@ -58,20 +58,23 @@ do the same commands, but replace config.yaml with config.ufl.yaml
 
 
 ```bash
-# destination for yolov7 benchmarks
 DST_ROOT="/blue/ranka/j.fleischer/tempdele/chocolatechip/semester-work/spring2025/darknet/artifacts/outputs/FisheyeTrafficDarknetLocal"
-mkdir -p "${DST_ROOT}/yolov7"
+mkdir -p "${DST_ROOT}"
 
-# move all benchmark__* folders from every repeat’s yolov7 subdir
 for d in directive_*_repeat_*; do
-  if [ -d "${d}/yolov7" ]; then
-    b=$(find "${d}/yolov7" -maxdepth 1 -type d -name 'benchmark__*' -print -quit)
-    [ -n "$b" ] && mv "$b" "${DST_ROOT}/yolov7/" && echo "Moved $(basename "$b") → yolov7"
-  fi
+  ydir=$(find "$d" -maxdepth 1 -type d -name 'yolov*' -printf '%f\n' | head -n 1)
+  [ -z "$ydir" ] && continue
+
+  mkdir -p "${DST_ROOT}/${ydir}"
+
+  b=$(find "${d}/${ydir}" -maxdepth 1 -type d -name 'benchmark__*' -print -quit)
+  [ -n "$b" ] && mv "$b" "${DST_ROOT}/${ydir}/" && echo "Moved $(basename "$b") → ${ydir}"
 done
 
 for d in directive_*_repeat_*; do
-  if { [ ! -d "$d/yolov7" ] || [ -z "$(find "$d/yolov7" -mindepth 1 -print -quit 2>/dev/null)" ]; } && \
+  ydir=$(find "$d" -maxdepth 1 -type d -name 'yolov*' -printf '%f\n' | head -n 1)
+
+  if { [ -z "$ydir" ] || [ -z "$(find "$d/$ydir" -mindepth 1 -print -quit 2>/dev/null)" ]; } && \
      { [ ! -d "$d/outputs" ] || [ -z "$(find "$d/outputs" -type f -print -quit 2>/dev/null)" ]; }; then
     rm -rf -- "$d"
     echo "Deleted $d"
